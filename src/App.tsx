@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from "react";
+import "./App.css";
 
-function App() {
+import WordsColumn from "./components/WordsColumn";
+
+import { translations } from "./translations";
+
+const App: FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Memo</h1>
+      <button>GO!</button>
+      <div className="word-columns">
+        <WordsColumn
+          name="English Words"
+          words={Object.keys(translations)}
+        ></WordsColumn>
+        <WordsColumn
+          name="French Words"
+          words={Object.values(translations)}
+        ></WordsColumn>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
