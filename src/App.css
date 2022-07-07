@@ -1,7 +1,41 @@
-.App {
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  user-select: none;
+}
+
+button {
+  padding: 10px;
+}
+
+.App {
+  max-width: 500px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+header.learn {
+  background-color: lime;
+}
+
+header.test {
+  background-color: red;
+}
+
+header.review {
+  background-color: orange;
+}
+
+.game-state-and-button {
+  display: flex;
+  align-items: center;
+  column-gap: 2em;
 }
 
 .word-columns {
@@ -29,4 +63,17 @@
   border: 1px solid black;
   width: 10em;
   padding: 0.6em;
+}
+
+.word-clickable {
+  cursor: pointer;
+  background: rgb(196, 253, 255);
+}
+
+.word-selected {
+  background-color: yellow;
+}
+
+.word-paired {
+  opacity: 0.2;
 }

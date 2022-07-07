@@ -1,6 +1,6 @@
 /**
  * Randomly shuffle a string array.
- * Implementation of the Durstenfeld variation of the Fisher–Yates shuffle:
+ * Implementation of the Durstenfeld variation of the unbiased Fisher–Yates shuffle:
  * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
  */
 export function shuffleArray(array: string[]) {
