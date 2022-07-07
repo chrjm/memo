@@ -7,10 +7,12 @@ import { shuffleArray } from "./helpers/shuffleArray";
 import { translations } from "./translations";
 
 const App: FC = () => {
-  const [currentWords, setCurrentWords] = useState({
-    english: Object.keys(translations),
-    french: Object.values(translations),
-  });
+  const [currentWords, setCurrentWords] = useState<{ [key: string]: string[] }>(
+    {
+      english: Object.keys(translations),
+      french: Object.values(translations),
+    }
+  );
 
   return (
     <div className="App">
