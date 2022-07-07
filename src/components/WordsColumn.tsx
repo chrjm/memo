@@ -8,24 +8,34 @@ function WordsColumn({
   selectWord,
   firstSelectedWord,
   pairedWords,
+  correctWords,
 }: {
   name: string;
   words: string[];
   selectWord: Function;
   firstSelectedWord: string;
   pairedWords: { [key: string]: string };
+  correctWords: string[];
 }) {
   const { gameState, setGameState } = useContext(GameStateContext);
 
   function determineWordClasses(word: string): string {
     const wordClasses: string[] = ["word"];
-    if (gameState === "test") wordClasses.push("word-clickable");
-    if (firstSelectedWord === word) wordClasses.push("word-selected");
+    if (gameState === "test") {
+      wordClasses.push("word-clickable");
+      if (firstSelectedWord === word) wordClasses.push("word-selected");
 
-    for (const [englishWord, frenchWord] of Object.entries(pairedWords)) {
-      if (frenchWord.length > 0) {
-        if (word === englishWord || word === frenchWord)
-          wordClasses.push("word-paired");
+      for (const [englishWord, frenchWord] of Object.entries(pairedWords)) {
+        if (frenchWord.length > 0) {
+          if (word === englishWord || word === frenchWord)
+            wordClasses.push("word-paired");
+        }
+      }
+    } else if (gameState === "review") {
+      if (correctWords.includes(word)) {
+        wordClasses.push("word-correct");
+      } else {
+        wordClasses.push("word-incorrect");
       }
     }
 

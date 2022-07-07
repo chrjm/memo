@@ -32,10 +32,9 @@ header.review {
   background-color: orange;
 }
 
-.game-state-and-button {
+.results {
   display: flex;
-  align-items: center;
-  column-gap: 2em;
+  column-gap: 1em;
 }
 
 .word-columns {
@@ -76,4 +75,12 @@ header.review {
 
 .word-paired {
   opacity: 0.2;
+}
+
+.word-correct {
+  background-color: lime;
+}
+
+.word-incorrect {
+  background-color: red;
 }
