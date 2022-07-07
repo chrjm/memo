@@ -1,23 +1,38 @@
-import React, { FC } from "react";
+import { FC, useState } from "react";
 import "./App.css";
 
 import WordsColumn from "./components/WordsColumn";
 
+import { shuffleArray } from "./helpers/shuffleArray";
 import { translations } from "./translations";
 
 const App: FC = () => {
+  const [currentWords, setCurrentWords] = useState({
+    english: Object.keys(translations),
+    french: Object.values(translations),
+  });
+
   return (
     <div className="App">
       <h1>Memo</h1>
-      <button>GO!</button>
+      <button
+        onClick={() => {
+          setCurrentWords({
+            english: shuffleArray(currentWords.english),
+            french: shuffleArray(currentWords.french),
+          });
+        }}
+      >
+        GO!
+      </button>
       <div className="word-columns">
         <WordsColumn
           name="English Words"
-          words={Object.keys(translations)}
+          words={currentWords.english}
         ></WordsColumn>
         <WordsColumn
           name="French Words"
-          words={Object.values(translations)}
+          words={currentWords.french}
         ></WordsColumn>
       </div>
     </div>

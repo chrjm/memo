@@ -4,7 +4,11 @@ function WordsColumn({ name, words }: { name: string; words: string[] }) {
       <div className="words-column-name">{name}</div>
       <div className="words">
         {words.map((word: string) => {
-          return <div className="word">{word}</div>;
+          return (
+            <div className="word" key={word}>
+              {word}
+            </div>
+          );
         })}
       </div>
     </div>
