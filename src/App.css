@@ -32,11 +32,6 @@ header.review {
   background-color: orange;
 }
 
-.results {
-  display: flex;
-  column-gap: 1em;
-}
-
 .word-columns {
   display: flex;
 }
@@ -107,4 +102,32 @@ header.review {
   border-bottom: 1px solid blue;
   top: 48%;
   left: 48.5%;
+}
+
+.results {
+  margin-top: 1em;
+}
+
+.result-pair {
+  display: flex;
+  width: 500px;
+  margin-bottom: 0.6em;
+  padding-bottom: 0.6em;
+  border-bottom: 1px solid black;
+}
+
+.result-pair-header {
+  font-weight: bold;
+}
+
+.result-pair-correct {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+.result-pair-incorrect {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.result-word {
+  width: 10em;
 }

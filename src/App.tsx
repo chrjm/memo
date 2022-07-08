@@ -2,6 +2,7 @@ import { FC, useState, useMemo } from "react";
 import "./App.css";
 
 import WordsColumn from "./components/WordsColumn";
+import Results from "./components/Results";
 
 import { GameStateContext } from "./contexts/GameStateContext";
 
@@ -104,48 +105,50 @@ const App: FC = () => {
             {gameState === "learn" ? "GO!" : "GRADE"}
           </button>
         </header>
-        {gameState === "review" && (
-          <div className="results">
-            Results:
-            <div className="results-count">
-              {numCorrectPairs}/{currentWords.english.length}
-            </div>
-            <div className="results-percentage">
-              {gradePercentage.toFixed(0)}%
-            </div>
+        {["learn", "test"].includes(gameState) && (
+          <div className="word-columns">
+            <WordsColumn
+              columnName={"English Words"}
+              words={unpairedEnglishWords}
+              selectWord={selectWord}
+              firstSelectedWord={firstSelectedWord}
+              pairedWords={pairedWords}
+              correctWords={correctWords}
+            ></WordsColumn>
+            <WordsColumn
+              columnName={"French Words"}
+              words={unpairedFrenchWords}
+              selectWord={selectWord}
+              firstSelectedWord={firstSelectedWord}
+              pairedWords={pairedWords}
+              correctWords={correctWords}
+            ></WordsColumn>
           </div>
         )}
-        <div className="word-columns">
-          <WordsColumn
-            columnName={"English Words"}
-            words={unpairedEnglishWords}
-            selectWord={selectWord}
-            firstSelectedWord={firstSelectedWord}
+        {gameState === "test" && (
+          <div className="paired-words">
+            {Object.entries(pairedWords)
+              .filter(([englishWord, frenchWord]) => frenchWord.length > 0)
+              .map(([englishWord, frenchWord]) => {
+                return (
+                  <div className="paired-words-pair" key={englishWord}>
+                    <div className="paired-words-pair-link"></div>
+                    <div className="word">{englishWord}</div>
+                    <div className="word">{frenchWord}</div>
+                  </div>
+                );
+              })}
+          </div>
+        )}
+        {gameState === "review" && (
+          <Results
+            numCorrectPairs={numCorrectPairs}
+            currentWords={currentWords}
             pairedWords={pairedWords}
-            correctWords={correctWords}
-          ></WordsColumn>
-          <WordsColumn
-            columnName={"French Words"}
-            words={unpairedFrenchWords}
-            selectWord={selectWord}
-            firstSelectedWord={firstSelectedWord}
-            pairedWords={pairedWords}
-            correctWords={correctWords}
-          ></WordsColumn>
-        </div>
-        <div className="paired-words">
-          {Object.entries(pairedWords)
-            .filter(([englishWord, frenchWord]) => frenchWord.length > 0)
-            .map(([englishWord, frenchWord]) => {
-              return (
-                <div className="paired-words-pair" key={englishWord}>
-                  <div className="paired-words-pair-link"></div>
-                  <div className="word">{englishWord}</div>
-                  <div className="word">{frenchWord}</div>
-                </div>
-              );
-            })}
-        </div>
+            gradePercentage={gradePercentage}
+            translations={translations}
+          ></Results>
+        )}
       </div>
     </GameStateContext.Provider>
   );
