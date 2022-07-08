@@ -60,7 +60,6 @@ const App: FC = () => {
       });
       setGameState("test");
     } else if (gameState === "test") {
-      setGameState("review");
       let numCorrectPairsResult: number = 0;
       const foundCorrectWords: string[] = [];
       for (const [englishWord, frenchWord] of Object.entries(pairedWords)) {
@@ -75,7 +74,15 @@ const App: FC = () => {
       setGradePercentage(
         (numCorrectPairsResult / currentWords.english.length) * 100
       );
+      setGameState("review");
     } else if (gameState === "review") {
+      setCurrentWords({
+        english: Object.keys(translations),
+        french: Object.values(translations),
+      });
+      setPairedWords(
+        Object.fromEntries(Object.keys(translations).map((key) => [key, ""]))
+      );
       setGameState("learn");
     }
   }
@@ -96,13 +103,19 @@ const App: FC = () => {
     }
   }
 
+  const gameStateToControlButtonText: { [key: string]: string } = {
+    learn: "GO!",
+    test: "Grade",
+    review: "Restart",
+  };
+
   return (
     <GameStateContext.Provider value={gameStateMemo}>
       <div className="App">
         <header className={gameState}>
           <h1>Memo</h1>
           <button onClick={handleControlButton}>
-            {gameState === "learn" ? "GO!" : "GRADE"}
+            {gameStateToControlButtonText[gameState]}
           </button>
         </header>
         {["learn", "test"].includes(gameState) && (
