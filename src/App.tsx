@@ -79,10 +79,21 @@ const App: FC = () => {
     }
   }
 
-  // console.log("Game State:", gameState);
-  // console.log("First Selected Word:", firstSelectedWord);
-  // console.log("Paired Words:", pairedWords);
-  console.log("Correct Words:", correctWords);
+  // Create a list of English words that have not been paired.
+  const unpairedEnglishWords: string[] = [];
+  for (const word of currentWords.english) {
+    if (pairedWords[word].length === 0) {
+      unpairedEnglishWords.push(word);
+    }
+  }
+
+  // Create a list of French words that have not been paired.
+  const unpairedFrenchWords: string[] = [];
+  for (const word of currentWords.french) {
+    if (!Object.values(pairedWords).includes(word)) {
+      unpairedFrenchWords.push(word);
+    }
+  }
 
   return (
     <GameStateContext.Provider value={gameStateMemo}>
@@ -106,21 +117,34 @@ const App: FC = () => {
         )}
         <div className="word-columns">
           <WordsColumn
-            name="English Words"
-            words={currentWords.english}
+            columnName={"English Words"}
+            words={unpairedEnglishWords}
             selectWord={selectWord}
             firstSelectedWord={firstSelectedWord}
             pairedWords={pairedWords}
             correctWords={correctWords}
           ></WordsColumn>
           <WordsColumn
-            name="French Words"
-            words={currentWords.french}
+            columnName={"French Words"}
+            words={unpairedFrenchWords}
             selectWord={selectWord}
             firstSelectedWord={firstSelectedWord}
             pairedWords={pairedWords}
             correctWords={correctWords}
           ></WordsColumn>
+        </div>
+        <div className="paired-words">
+          {Object.entries(pairedWords)
+            .filter(([englishWord, frenchWord]) => frenchWord.length > 0)
+            .map(([englishWord, frenchWord]) => {
+              return (
+                <div className="paired-words-pair" key={englishWord}>
+                  <div className="paired-words-pair-link"></div>
+                  <div className="word">{englishWord}</div>
+                  <div className="word">{frenchWord}</div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </GameStateContext.Provider>

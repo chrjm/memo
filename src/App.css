@@ -84,3 +84,27 @@ header.review {
 .word-incorrect {
   background-color: red;
 }
+
+.paired-words {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 1em;
+}
+
+.paired-words-pair {
+  display: flex;
+  column-gap: 1em;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+}
+
+.paired-words-pair-link {
+  width: 1em;
+  position: absolute;
+  border-bottom: 1px solid blue;
+  top: 48%;
+  left: 48.5%;
+}

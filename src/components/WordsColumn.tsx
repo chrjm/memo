@@ -1,23 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { GameStateContext } from "../contexts/GameStateContext";
 
 function WordsColumn({
-  name,
+  columnName,
   words,
   selectWord,
   firstSelectedWord,
   pairedWords,
   correctWords,
 }: {
-  name: string;
+  columnName: string;
   words: string[];
   selectWord: Function;
   firstSelectedWord: string;
   pairedWords: { [key: string]: string };
   correctWords: string[];
 }) {
-  const { gameState, setGameState } = useContext(GameStateContext);
+  const { gameState } = useContext(GameStateContext);
 
   function determineWordClasses(word: string): string {
     const wordClasses: string[] = ["word"];
@@ -44,7 +44,7 @@ function WordsColumn({
 
   return (
     <div className="words-column">
-      <div className="words-column-name">{name}</div>
+      <div className="words-column-name">{columnName}</div>
       <div className="words">
         {words.map((word: string) => {
           return (
