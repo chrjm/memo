@@ -2,21 +2,18 @@ import { useContext } from "react";
 
 import { TranslationsContext } from "../contexts/TranslationsContext";
 
+import correctIcon from "../static/images/correct_icon.svg";
+import incorrectIcon from "../static/images/incorrect_icon.svg";
+
 /**
- * Dynamically build a string of HTML classes for a result-pair element.
+ * Dynamically build a string of HTML classes for a user answer element.
  *
- * @param frenchWords Contains the user's answer as well as the actual answer,
- *                    and is used to compare the two.
+ * @param isCorrect Represents whether this user answer is correct.
  * @returns A string of HTML classes separated with spaces.
  */
-function determineResultPairClasses(frenchWords: {
-  [key: string]: string;
-}): string {
-  const mainClass: string = "result-pair";
-  const correctnessClass: string =
-    frenchWords.userAnswer === frenchWords.answer
-      ? "result-pair-correct"
-      : "result-pair-incorrect";
+function determineUserAnswerClasses(isCorrect: boolean): string {
+  const mainClass: string = "result-word result-french";
+  const correctnessClass: string = isCorrect ? "" : "result-word-incorrect";
   return [mainClass, correctnessClass].join(" ");
 }
 
@@ -33,27 +30,51 @@ function Results() {
 
   return (
     <div className="results-component">
-      Results:
-      <div className="results-count">{countString}</div>
-      <div className="results-percentage">{percentageCorrect.toFixed(0)}%</div>
+      <div className="results-datapoints">
+        <div
+          className="results-datapoint animate__animated animate__fadeInUp"
+          style={{ animationDelay: "0ms" }}
+        >
+          <div className="results-datapoint-value results-count">
+            {countString}
+          </div>
+          <div className="results-datapoint-label">Correct Pairs</div>
+        </div>
+        <div
+          className="results-datapoint animate__animated animate__fadeInUp"
+          style={{ animationDelay: "100ms" }}
+        >
+          <div className="results-datapoint-value results-percentage">
+            {percentageCorrect.toFixed(0)}%
+          </div>
+          <div className="results-datapoint-label">Percentage Score</div>
+        </div>
+      </div>
       <div className="results">
         <div className="result-pair result-pair-header">
           <div className="result-word">English Word</div>
-          <div className="result-word">Your Answer</div>
           <div className="result-word">Correct Answer</div>
+          <div className="result-word">Your Answer</div>
+          <div className="result-icon-wrapper"></div>
         </div>
         {Object.entries(translations).map(([englishWord, frenchWords]) => {
+          const isCorrect: boolean =
+            frenchWords.answer === frenchWords.userAnswer;
           return (
-            <div
-              className={determineResultPairClasses(frenchWords)}
-              key={englishWord}
-            >
+            <div className="result-pair" key={englishWord}>
               <div className="result-word result-english">{englishWord}</div>
-              <div className="result-word result-french">
-                {frenchWords.userAnswer}
-              </div>
               <div className="result-word result-answer">
                 {frenchWords.answer}
+              </div>
+              <div className={determineUserAnswerClasses(isCorrect)}>
+                {frenchWords.userAnswer}
+              </div>
+              <div className="result-icon-wrapper">
+                <img
+                  className="result-icon"
+                  src={isCorrect ? correctIcon : incorrectIcon}
+                  alt={isCorrect ? "A green checkmark" : "A red cross"}
+                />
               </div>
             </div>
           );

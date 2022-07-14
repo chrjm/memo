@@ -24,7 +24,7 @@ describe("Header component", () => {
     expect(screen.getByRole("button")).toHaveTextContent("GO!");
   });
 
-  test('in "test" state, has a button with the text "Grade"', () => {
+  test('in "test" state, has a button with the text "Grade >>"', () => {
     render(
       <GameStateContext.Provider
         value={{ gameState: "test", setGameState: () => {} }}
@@ -32,10 +32,10 @@ describe("Header component", () => {
         <Header />
       </GameStateContext.Provider>
     );
-    expect(screen.getByRole("button")).toHaveTextContent("Grade");
+    expect(screen.getByRole("button")).toHaveTextContent("Grade >>");
   });
 
-  test('in "review" state, has a button with the text "Restart"', () => {
+  test('in "review" state, has a button with the text "<< Restart"', () => {
     render(
       <GameStateContext.Provider
         value={{ gameState: "review", setGameState: () => {} }}
@@ -43,7 +43,7 @@ describe("Header component", () => {
         <Header />
       </GameStateContext.Provider>
     );
-    expect(screen.getByRole("button")).toHaveTextContent("Restart");
+    expect(screen.getByRole("button")).toHaveTextContent("<< Restart");
   });
 
   test('in "learn" state, clicking the control button calls game state setter', () => {
@@ -70,7 +70,7 @@ describe("Header component", () => {
       </GameStateContext.Provider>
     );
 
-    userEvent.click(screen.getByText("Grade"));
+    userEvent.click(screen.getByText("Grade >>"));
     expect(mockSetGameState).toHaveBeenCalledTimes(1);
   });
 
@@ -88,7 +88,7 @@ describe("Header component", () => {
       </GameStateContext.Provider>
     );
 
-    userEvent.click(screen.getByText("Restart"));
+    userEvent.click(screen.getByText("<< Restart"));
     expect(mockSetGameState).toHaveBeenCalledTimes(1);
   });
 
@@ -109,7 +109,7 @@ describe("Header component", () => {
       </GameStateContext.Provider>
     );
 
-    userEvent.click(screen.getByText("Restart"));
+    userEvent.click(screen.getByText("<< Restart"));
     expect(mockSetTranslations).toHaveBeenCalledTimes(1);
   });
 });

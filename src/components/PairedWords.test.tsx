@@ -88,8 +88,10 @@ describe("PairedWords component", () => {
     const parentElement: HTMLDivElement | null =
       document.querySelector(".paired-words");
 
-    const englishWordIndex: number = 1;
-    const frenchWordIndex: number = 2;
+    // These indices refer to which child of a word pair element should be
+    // expected to display the word from each language.
+    const englishWordIndex: number = 0;
+    const frenchWordIndex: number = 1;
 
     for (let i: number = 0; i < mockEnglishWords.length; i++) {
       const pairElement = parentElement?.children.item(i);

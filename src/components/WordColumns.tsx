@@ -68,8 +68,19 @@ function WordColumns() {
     }
   }
 
+  /**
+   * Dynamically build a string of HTML classes for the WordColumns container.
+   *
+   * @returns A string of HTML classes separated with spaces.
+   */
+  function determineWordColumnsClasses(): string {
+    const wordColumnsClasses: string[] = ["word-columns"];
+    if (gameState === "test") wordColumnsClasses.push("word-columns-test");
+    return wordColumnsClasses.join(" ");
+  }
+
   return (
-    <div className="word-columns">
+    <div className={determineWordColumnsClasses()}>
       <WordsList
         language="english"
         shuffledOrder={shuffledOrders["english"]}

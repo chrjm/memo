@@ -26,14 +26,21 @@ const App: FC = () => {
     return { translations, setTranslations };
   }, [translations]);
 
+  const shouldRenderWordColumns: boolean =
+    gameState === "learn" || gameState === "test";
+
   return (
     <GameStateContext.Provider value={gameStateMemo}>
       <TranslationsContext.Provider value={translationsMemo}>
         <div className="App">
           <Header />
-          {(gameState === "learn" || gameState === "test") && <WordColumns />}
-          {gameState === "test" && <PairedWords />}
-          {gameState === "review" && <Results />}
+          <div className="main-wrapper">
+            <div className="main-inner">
+              {shouldRenderWordColumns && <WordColumns />}
+              {gameState === "test" && <PairedWords />}
+              {gameState === "review" && <Results />}
+            </div>
+          </div>
         </div>
       </TranslationsContext.Provider>
     </GameStateContext.Provider>

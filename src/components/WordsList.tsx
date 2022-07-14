@@ -3,6 +3,9 @@ import { useContext } from "react";
 import { GameStateContext } from "../contexts/GameStateContext";
 import { TranslationsContext } from "../contexts/TranslationsContext";
 
+import englishFlag from "../static/images/flag_english.svg";
+import frenchFlag from "../static/images/flag_french.svg";
+
 function WordsColumn({
   language,
   shuffledOrder,
@@ -24,12 +27,47 @@ function WordsColumn({
    * @returns A string of HTML classes separated with spaces.
    */
   function determineWordClasses(word: string): string {
-    const wordClasses: string[] = ["word"];
-    if (gameState === "test") {
-      wordClasses.push("word-clickable");
-      if (firstSelectedWord === word) wordClasses.push("word-selected");
+    const wordClasses: string[] = ["word", `word-${language}`];
+
+    if (gameState === "learn") {
+      wordClasses.push("word-learn");
+    } else {
+      wordClasses.push("animate__animated", "animate__fadeInUp");
+
+      if (firstSelectedWord === word) {
+        wordClasses.push("word-selected");
+      } else {
+        if (firstSelectedWord !== "") {
+          if (language === "english") {
+            if (Object.keys(translations).includes(firstSelectedWord)) {
+              wordClasses.push("word-disabled");
+            } else {
+              wordClasses.push("word-clickable");
+            }
+          } else {
+            if (!Object.keys(translations).includes(firstSelectedWord)) {
+              wordClasses.push("word-disabled");
+            } else {
+              wordClasses.push("word-clickable");
+            }
+          }
+        } else {
+          wordClasses.push("word-clickable");
+        }
+      }
     }
     return wordClasses.join(" ");
+  }
+
+  /**
+   * Determine how long an element should wait before animating.
+   * This is used to have each word of a list animate sequentially.
+   *
+   * @param index The position in a list.
+   * @returns A string representing the computed animationDelay value in ms.
+   */
+  function determineAnimationDelay(index: number): string {
+    return `${index * 100}ms`;
   }
 
   /**
@@ -109,16 +147,34 @@ function WordsColumn({
       : generateFrenchWordList(wordOrder);
   }
 
+  const flagImage: string = language === "english" ? englishFlag : frenchFlag;
+
+  const languageToColumnName: { [key: string]: string } = {
+    english: "English Words",
+    french: "French Words",
+  };
+
   return (
     <div className="words-column">
-      <div className="words-column-name">{language}</div>
+      <div className="words-column-flag-and-name">
+        <img
+          className="words-column-flag"
+          src={flagImage}
+          alt={`${language} flag`}
+        />
+        <div className="words-column-name">
+          {languageToColumnName[language]}
+        </div>
+      </div>
+
       <div className="words">
-        {generateWordList().map((word: string) => {
+        {generateWordList().map((word: string, index) => {
           return (
             <div
               className={determineWordClasses(word)}
               key={word}
               onClick={() => selectWord(word)}
+              style={{ animationDelay: determineAnimationDelay(index) }}
             >
               {word}
             </div>

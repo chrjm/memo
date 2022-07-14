@@ -12,7 +12,7 @@ import { Translations } from "../types/Translations";
 import { translationsData } from "../data/translationsData";
 
 describe("WordColumns component", () => {
-  test('has a column with the label "english"', () => {
+  test('has a column with the label "English Words"', () => {
     render(
       <GameStateContext.Provider
         value={{ gameState: "learn", setGameState: () => {} }}
@@ -25,10 +25,10 @@ describe("WordColumns component", () => {
       </GameStateContext.Provider>
     );
 
-    expect(screen.getByText("english")).toBeInTheDocument();
+    expect(screen.getByText("English Words")).toBeInTheDocument();
   });
 
-  test('has a column with the label "french"', () => {
+  test('has a column with the label "French Words"', () => {
     render(
       <GameStateContext.Provider
         value={{ gameState: "learn", setGameState: () => {} }}
@@ -41,7 +41,7 @@ describe("WordColumns component", () => {
       </GameStateContext.Provider>
     );
 
-    expect(screen.getByText("french")).toBeInTheDocument();
+    expect(screen.getByText("French Words")).toBeInTheDocument();
   });
 
   test('in "learn" state, lists all 12 English words"', () => {
