@@ -61,7 +61,7 @@ header.review {
 
 .word-clickable {
   cursor: pointer;
-  background: rgb(196, 253, 255);
+  background-color: rgb(196, 253, 255);
 }
 
 .word-selected {

@@ -14,11 +14,27 @@
  * @length An integer representing the length of the array to be traversed.
  * @returns An integer array representing an order of indexes.
  */
-export function generateShuffledOrder(length: number): number[] {
+function generateShuffledOrder(length: number): number[] {
   const array = Array.from(Array(length).keys());
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+}
+
+/**
+ * Generate shuffled orders to traverse each language's word list.
+ * Each word list has a different order so that the pairs are mixed.
+ *
+ * @param numberOfPairs The number of pairs, e.g. {hello: "bonjour"} is one pair.
+ * @returns An object containing a shuffled order for "english" and "french" keys.
+ */
+export function generateShuffledOrders(numberOfPairs: number): {
+  [key: string]: number[];
+} {
+  return {
+    english: generateShuffledOrder(numberOfPairs),
+    french: generateShuffledOrder(numberOfPairs),
+  };
 }

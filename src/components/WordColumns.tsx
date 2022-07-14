@@ -1,27 +1,11 @@
 import { useState, useContext } from "react";
 
-import WordsColumn from "./WordsColumn";
+import WordsList from "./WordsList";
 
 import { GameStateContext } from "../contexts/GameStateContext";
 import { TranslationsContext } from "../contexts/TranslationsContext";
 
-import { generateShuffledOrder } from "../helpers/generateShuffledOrder";
-
-/**
- * Generate a shuffled order to traverse each language's word list.
- * Each word list has a different order so that the pairs are mixed.
- *
- * @param numberOfPairs The number of pairs, e.g. {hello: "bonjour"} is one pair.
- * @returns An array of integers representing an order to traverse each word list.
- */
-function generateShuffledOrders(numberOfPairs: number): {
-  [key: string]: number[];
-} {
-  return {
-    english: generateShuffledOrder(numberOfPairs),
-    french: generateShuffledOrder(numberOfPairs),
-  };
-}
+import { generateShuffledOrders } from "../helpers/generateShuffledOrders";
 
 function WordColumns() {
   const { gameState } = useContext(GameStateContext);
@@ -86,18 +70,18 @@ function WordColumns() {
 
   return (
     <div className="word-columns">
-      <WordsColumn
+      <WordsList
         language="english"
         shuffledOrder={shuffledOrders["english"]}
         selectWord={selectWord}
         firstSelectedWord={firstSelectedWord}
-      ></WordsColumn>
-      <WordsColumn
+      ></WordsList>
+      <WordsList
         language="french"
         shuffledOrder={shuffledOrders["french"]}
         selectWord={selectWord}
         firstSelectedWord={firstSelectedWord}
-      ></WordsColumn>
+      ></WordsList>
     </div>
   );
 }
