@@ -26,6 +26,14 @@ Open `http://127.0.0.1:3000/` in a browser to use the app.
 
 Follow the instructions provided within the app.
 
+## Testing
+
+Run tests within Docker container (after building):
+
+```sh
+docker run -e CI=true memo test -- --verbose --coverage --watchAll=false
+```
+
 ## Technical Design & Choices
 
 - A goal during development was to minimise the duplication of vocabulary data. Early iterations shuffled the word lists by duplicating the vocabulary data and then shuffling the words in this copied version. This process was later improved by instead shuffling two integer arrays, one for each language, and then using these shuffled arrays to index each element of the vocabulary to minimise duplication of data while still retaining persistent shuffled orders. For example, the word array `["apple", "pear", "mango"]` could exist in one place in memory, and could be shuffled during rendering by accessing each element with a shuffled integer array `[1, 2, 0]`, resulting in a persistent rendered order of `["pear", "mango", "apple"]`;

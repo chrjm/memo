@@ -43,5 +43,15 @@
     "@testing-library/jest-dom": "^5.16.4",
     "core-js": "^3.23.4",
     "react-app-polyfill": "^3.0.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!src/types/**",
+      "!src/index.tsx",
+      "!src/reportWebVitals.ts",
+      "!src/react-app-env.d.ts"
+    ]
   }
 }
